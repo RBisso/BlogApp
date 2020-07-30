@@ -17,18 +17,12 @@ module.exports = {
                     response.status(201).redirect('/');
                 })
                 .catch((error) => {
-                    response.status(400).send({message: error.message});
+                    response.status(500).json({message: error.message});
                 });
         } catch(err) {
             console.log(err);
         }
-        /*await post.save()
-                .then((post) => {
-                    response.status(201).rendirect('/index');
-                })
-                .catch((error) => {
-                    response.status(400).send({message: error.message});
-                });
+        /*
         try {
                 await post.save((err, p) => {
                     if(err) response.status(500).send({message: err.message});
@@ -38,5 +32,19 @@ module.exports = {
                 response.status(500).send({message: err.message});
             }    
         */
+    },
+
+    async getPosts(request, response) {
+        try {
+            const posts = await Post.find()
+                .then(() => {
+                    response.send({ posts : posts });
+                })
+                .catch((error) => {
+                    response.status(500).json({message: error.message});
+                });
+        } catch(err) {
+            console.log(err);
+        }
     }
 };
