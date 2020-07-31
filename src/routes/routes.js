@@ -11,6 +11,7 @@ routes.get('/', PostController.getPosts);
 routes.get('/admin/CreatePost', (request,response) => {
     return response.render('createPost', {title: 'Admin area', message: 'top secret'});
 });
+routes.get('/post/:id', PostController.getPost);
 routes.post('/admin/CreatePost', PostController.createPost);
 
 module.exports = routes;

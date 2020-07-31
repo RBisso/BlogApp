@@ -22,29 +22,37 @@ module.exports = {
         } catch(err) {
             console.log(err);
         }
-        /*
-        try {
-                await post.save((err, p) => {
-                    if(err) response.status(500).send({message: err.message});
-                    response.status(201).render('admin', {message:'Post Created'}); 
-                });
-            } catch(err) {
-                response.status(500).send({message: err.message});
-            }    
-        */
     },
 
     async getPosts(request, response) {
         try {
-            const posts = await Post.find()
-                .then(() => {
-                    response.send({ posts : posts });
-                })
-                .catch((error) => {
-                    response.status(500).json({message: error.message});
-                });
+            const posts = await Post.find({})
+            if (posts)
+                response.render('index', {title: "cu", posts: posts});
+            else
+                response.status(500).json({message: "error getting data from database"});
+        } catch(err) {
+            console.log('error!?!?')
+            console.log(err);
+        }
+    },
+    
+    async getPost(request,response) {
+        try {
+            const post = await Post.findOne({title: request.params.id});
+            if (post)
+                response.render('post', {title: post.title, post: post});
+            else
+                response.status(500).json({message: "error getting post data"});
         } catch(err) {
             console.log(err);
         }
     }
 };
+/*
+Rodrigo Bisso
+My second post
+I finished most of the main functions, now i need to finish creating a post
+So, the main page is almost done. I need to create some functions to split the post in pages. I think 5 posts per page is a good number, but need to be tested. This post is to try making the CreatePost page to work. To create the post, I will use fetch for now. Maybe I change it later. For now, sorry for my bad english :).
+
+*/
