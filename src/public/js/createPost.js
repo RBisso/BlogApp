@@ -6,17 +6,16 @@ function createPost() {
         abstract : document.getElementById('abstract').value,
         content  : document.getElementById('content').value
     }
-    console.log(data.content);
     const Params = {
         headers: {
-            "content-type": "application/json; charset=UTF-8"
+            "content-type": "application/json"
         },
-        body: data,
+        body: JSON.stringify(data),
         method: "POST"
     }
-    console.log(data.json());
+    console.log(data);
     fetch(URL, Params)
-        .then(data => { return data.json() })
+        .then(data => { return data })
         .then(res => { console.log(res) })
         .catch(error => { console.log(error) });
 }
